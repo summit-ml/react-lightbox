@@ -29,7 +29,7 @@ npm i @summitml/react-lightbox
 ```
 
 ## Tailwind content glob (required)
-Add one line to your tailwind.config.js so Tailwind’s purge step sees the classes:
+Add one line to your tailwind.config.js so Tailwind's purge step sees the classes:
 
 ```js
 /** @type {import('tailwindcss').Config} */
@@ -47,7 +47,7 @@ Restart your dev server after editing the config.
 ## 🚀 Quick start
 ```jsx
 import { useState } from 'react';
-import { LightBox } from '@summitml/react-lightbox';
+import { Lightbox } from '@summitml/react-lightbox';
 
 export default function Gallery() {
   const [open, setOpen] = useState(false);
@@ -58,24 +58,50 @@ export default function Gallery() {
         Open lightbox
       </button>
 
-      <LightBox isOpen={open} onClose={() => setOpen(false)}>
+      <Lightbox isOpen={open} onClose={() => setOpen(false)}>
         <img src="/photos/one.jpg" alt="" />
         <img src="/photos/two.jpg" alt="" />
         <img src="/photos/three.jpg" alt="" />
-      </LightBox>
+      </Lightbox>
     </>
   );
 }
 ```
 
+## 🎨 Customizing with className props
+
+You can customize the appearance of any element in the Lightbox by passing className props:
+
+```jsx
+<Lightbox 
+  isOpen={open} 
+  onClose={() => setOpen(false)}
+  containerClassName="bg-gray-900/95" // Make the background darker
+  closeButtonClassName="bg-red-500 hover:bg-red-600" // Red close button
+  navigationButtonClassName="bg-blue-500 hover:bg-blue-600" // Blue nav buttons
+  contentClassName="p-4" // Add padding to content area
+>
+  <img src="/photos/one.jpg" alt="" />
+  <img src="/photos/two.jpg" alt="" />
+</Lightbox>
+```
+
 ## 📝 API
 
-| Prop            | Type          | Default | Description                                                            |
-|-----------------|---------------|---------|------------------------------------------------------------------------|
-| `isOpen`        | `boolean`     | —       | Controls visibility.                                                   |
-| `onClose`       | `() => void`  | —       | Fires when user clicks outside, presses **Esc**, or swipes down.       |
-| `defaultIndex`  | `number`      | `0`     | First child to show when the lightbox opens.                           |
-| `children`      | `ReactNode[]` | —       | Any renderable elements (`<img>`, `<video>`, custom JSX, etc.).        |
+| Prop                     | Type          | Default | Description                                                            |
+|--------------------------|---------------|---------|------------------------------------------------------------------------|
+| `isOpen`                 | `boolean`     | —       | Controls visibility.                                                   |
+| `onClose`                | `() => void`  | —       | Fires when user clicks outside, presses **Esc**, or swipes down.       |
+| `defaultIndex`           | `number`      | `0`     | First child to show when the lightbox opens.                           |
+| `children`               | `ReactNode[]` | —       | Any renderable elements (`<img>`, `<video>`, custom JSX, etc.).        |
+| `containerClassName`     | `string`      | —       | Additional classes for the main container.                             |
+| `closeButtonClassName`   | `string`      | —       | Additional classes for the close button.                               |
+| `contentWrapperClassName`| `string`      | —       | Additional classes for the content wrapper.                            |
+| `navigationButtonClassName` | `string`   | —       | Additional classes for both navigation buttons.                        |
+| `prevButtonClassName`    | `string`      | —       | Additional classes for the previous button only.                       |
+| `nextButtonClassName`    | `string`      | —       | Additional classes for the next button only.                           |
+| `contentClassName`       | `string`      | —       | Additional classes for the content area.                               |
+| `counterClassName`       | `string`      | —       | Additional classes for the counter text.                               |
 
 ## 🎛️ Keyboard & gesture shortcuts
 | Action          | Trigger                                   |

@@ -1,11 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { XMarkIcon, ChevronLeftIcon, ChevronRightIcon } from './icons';
+import clsx from 'clsx';
 
 /**
  * This is a component that displays a lightbox with a set of images or components.
  * Use defaultIndex to set the initial displayed child.
  */
-export const Lightbox = ({ children, isOpen, onClose, defaultIndex = 0 }) => {
+export const Lightbox = ({
+    children,
+    isOpen,
+    onClose,
+    defaultIndex = 0,
+    containerClassName,
+    closeButtonClassName,
+    contentWrapperClassName,
+    navigationButtonClassName,
+    prevButtonClassName,
+    nextButtonClassName,
+    contentClassName,
+    counterClassName
+}) => {
     const [currentIndex, setCurrentIndex] = useState(defaultIndex);
     const touchStartX = useRef(null);
     const touchStartY = useRef(null);
@@ -89,31 +103,47 @@ export const Lightbox = ({ children, isOpen, onClose, defaultIndex = 0 }) => {
     return (
         <div
             ref={containerRef}
-            className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
+            className={clsx(
+                "fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50",
+                containerClassName
+            )}
             onClick={handleBackgroundClick}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
         >
             <button
                 onClick={(e) => { e.stopPropagation(); onClose(); }}
-                className="absolute top-4 right-4 bg-black/50 sm:bg-transparent hover:sm:bg-black/50 text-white p-2 z-[60] transition-colors"
+                className={clsx(
+                    "absolute top-4 right-4 bg-black/50 sm:bg-transparent hover:sm:bg-black/50 text-white p-2 z-[60] transition-colors",
+                    closeButtonClassName
+                )}
                 aria-label="Close lightbox"
             >
                 <XMarkIcon className="h-8 w-8" />
             </button>
             <div
-                className="relative w-full h-full flex justify-center items-center"
+                className={clsx(
+                    "relative w-full h-full flex justify-center items-center",
+                    contentWrapperClassName
+                )}
             >
                 <button
                     ref={navigateLeftRef}
                     onClick={(e) => { e.stopPropagation(); navigate(-1); }}
-                    className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black/50 sm:bg-transparent hover:sm:bg-black/50 text-white p-2 z-[55] transition-colors"
+                    className={clsx(
+                        "absolute left-0 top-1/2 transform -translate-y-1/2 bg-black/50 sm:bg-transparent hover:sm:bg-black/50 text-white p-2 z-[55] transition-colors",
+                        navigationButtonClassName,
+                        prevButtonClassName
+                    )}
                     aria-label="Previous image"
                 >
                     <ChevronLeftIcon className="h-12 w-12" />
                 </button>
                 <div
-                    className="w-screen h-screen sm:w-[calc(100vw-70px-70px)] sm:h-[calc(100vh-80px-80px)] max-w-screen max-h-screen flex items-center justify-center"
+                    className={clsx(
+                        "w-screen h-screen sm:w-[calc(100vw-70px-70px)] sm:h-[calc(100vh-80px-80px)] max-w-screen max-h-screen flex items-center justify-center",
+                        contentClassName
+                    )}
                 >
                     {React.cloneElement(React.Children.toArray(children)[currentIndex], {
                         className: 'max-w-full max-h-full object-contain',
@@ -123,7 +153,11 @@ export const Lightbox = ({ children, isOpen, onClose, defaultIndex = 0 }) => {
                 <button
                     ref={navigateRightRef}
                     onClick={(e) => { e.stopPropagation(); navigate(1); }}
-                    className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black/50 sm:bg-transparent hover:sm:bg-black/50 text-white p-2 z-[55] transition-colors"
+                    className={clsx(
+                        "absolute right-0 top-1/2 transform -translate-y-1/2 bg-black/50 sm:bg-transparent hover:sm:bg-black/50 text-white p-2 z-[55] transition-colors",
+                        navigationButtonClassName,
+                        nextButtonClassName
+                    )}
                     aria-label="Next image"
                 >
                     <ChevronRightIcon className="h-12 w-12" />
@@ -131,7 +165,10 @@ export const Lightbox = ({ children, isOpen, onClose, defaultIndex = 0 }) => {
             </div>
             <div className="absolute bottom-5 left-0 right-0 flex items-center justify-center">
                 <div className="flex items-center justify-center">
-                    <span className="bg-black/50 sm:bg-transparent text-white font-semibold text-sm p-2 z-[55]">
+                    <span className={clsx(
+                        "bg-black/50 sm:bg-transparent text-white font-semibold text-sm p-2 z-[55]",
+                        counterClassName
+                    )}>
                         {currentIndex + 1} of {React.Children.count(children)}
                     </span>
                 </div>
@@ -146,7 +183,7 @@ export const Lightbox = ({ children, isOpen, onClose, defaultIndex = 0 }) => {
  * because the ref is not available yet.
  */
 export const RefWrapper = React.forwardRef((props, ref) => (
-    <div ref={ref} className="w-full h-full">
+    <div ref={ref} className={clsx("w-full h-full", props.className)}>
         {props.children}
     </div>
 ));

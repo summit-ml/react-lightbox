@@ -31,5 +31,8 @@
   "scripts": {
     "build": "rollup -c",
     "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1"
   }
 }
