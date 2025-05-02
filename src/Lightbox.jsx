@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { XMarkIcon, ChevronLeftIcon, ChevronRightIcon } from './icons';
-import clsx from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 /**
  * This is a component that displays a lightbox with a set of images or components.
@@ -103,7 +103,7 @@ export const Lightbox = ({
     return (
         <div
             ref={containerRef}
-            className={clsx(
+            className={twMerge(
                 "fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50",
                 containerClassName
             )}
@@ -113,7 +113,7 @@ export const Lightbox = ({
         >
             <button
                 onClick={(e) => { e.stopPropagation(); onClose(); }}
-                className={clsx(
+                className={twMerge(
                     "absolute top-4 right-4 bg-black/50 sm:bg-transparent hover:sm:bg-black/50 text-white p-2 z-[60] transition-colors",
                     closeButtonClassName
                 )}
@@ -122,7 +122,7 @@ export const Lightbox = ({
                 <XMarkIcon className="h-8 w-8" />
             </button>
             <div
-                className={clsx(
+                className={twMerge(
                     "relative w-full h-full flex justify-center items-center",
                     contentWrapperClassName
                 )}
@@ -130,7 +130,7 @@ export const Lightbox = ({
                 <button
                     ref={navigateLeftRef}
                     onClick={(e) => { e.stopPropagation(); navigate(-1); }}
-                    className={clsx(
+                    className={twMerge(
                         "absolute left-0 top-1/2 transform -translate-y-1/2 bg-black/50 sm:bg-transparent hover:sm:bg-black/50 text-white p-2 z-[55] transition-colors",
                         navigationButtonClassName,
                         prevButtonClassName
@@ -140,7 +140,7 @@ export const Lightbox = ({
                     <ChevronLeftIcon className="h-12 w-12" />
                 </button>
                 <div
-                    className={clsx(
+                    className={twMerge(
                         "w-screen h-screen sm:w-[calc(100vw-70px-70px)] sm:h-[calc(100vh-80px-80px)] max-w-screen max-h-screen flex items-center justify-center",
                         contentClassName
                     )}
@@ -153,7 +153,7 @@ export const Lightbox = ({
                 <button
                     ref={navigateRightRef}
                     onClick={(e) => { e.stopPropagation(); navigate(1); }}
-                    className={clsx(
+                    className={twMerge(
                         "absolute right-0 top-1/2 transform -translate-y-1/2 bg-black/50 sm:bg-transparent hover:sm:bg-black/50 text-white p-2 z-[55] transition-colors",
                         navigationButtonClassName,
                         nextButtonClassName
@@ -165,7 +165,7 @@ export const Lightbox = ({
             </div>
             <div className="absolute bottom-5 left-0 right-0 flex items-center justify-center">
                 <div className="flex items-center justify-center">
-                    <span className={clsx(
+                    <span className={twMerge(
                         "bg-black/50 sm:bg-transparent text-white font-semibold text-sm p-2 z-[55]",
                         counterClassName
                     )}>
@@ -183,7 +183,7 @@ export const Lightbox = ({
  * because the ref is not available yet.
  */
 export const RefWrapper = React.forwardRef((props, ref) => (
-    <div ref={ref} className={clsx("w-full h-full", props.className)}>
+    <div ref={ref} className={twMerge("w-full h-full", props.className)}>
         {props.children}
     </div>
 ));

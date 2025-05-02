@@ -70,13 +70,13 @@ export default function Gallery() {
 
 ## 🎨 Customizing with className props
 
-You can customize the appearance of any element in the Lightbox by passing className props:
+You can customize the appearance of any element in the Lightbox by passing className props. We use `tailwind-merge` internally, so your classes will properly override any conflicting default classes:
 
 ```jsx
 <Lightbox 
   isOpen={open} 
   onClose={() => setOpen(false)}
-  containerClassName="bg-gray-900/95" // Make the background darker
+  containerClassName="bg-gray-900/95 z-100" // Will override default z-50 with z-100
   closeButtonClassName="bg-red-500 hover:bg-red-600" // Red close button
   navigationButtonClassName="bg-blue-500 hover:bg-blue-600" // Blue nav buttons
   contentClassName="p-4" // Add padding to content area
